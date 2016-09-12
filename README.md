@@ -31,3 +31,12 @@ cat id_rsa.pub | pbcopy
 git config --global user.name "ricard0javier"
 git config --global user.email villanueva.ricardo@gmail.com
 ```
+
+## Certificates
+- add a certificate to your keychain alone with its private key
+security import private_key.p12 -k ~/Library/Keychains/login.keychain
+security import public_key.pem -k ~/Library/Keychains/login.keychain
+
+[check the certs](1)
+
+[1]: https://www.sslshopper.com/article-most-common-openssl-commands.html
