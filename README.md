@@ -39,4 +39,27 @@ security import public_key.pem -k ~/Library/Keychains/login.keychain
 
 [check the certs](1)
 
+## Sync PI
+```bash
+cd /Users/ricardo/git/thecodestein.com
+gulp clean
+gulp build
+ssh pi@matheus "rm -rf thecodestein/"
+ssh pi@matheus "mkdir thecodestein"
+scp -r ./dist/* pi@matheus:thecodestein
+
+cd /Users/ricardo/git/thecodestein-backend
+sh gradlew installApp
+ssh pi@matheus "sudo fuser -k 80/tcp"
+ssh pi@matheus "rm -rf thecodestein-backend/"
+ssh pi@matheus "mkdir thecodestein-backend/"
+scp -r ./build/install/thecodestein-backend/* pi@matheus:thecodestein-backend
+
+ssh pi@matheus "ln -s /home/pi/thecodestein /home/pi/thecodestein-backend/public"
+ssh pi@matheus "sudo bash /home/pi/thecodestein-backend/bin/thecodestein-backend --server.port=80 &"
+
+
+
+```
+
 [1]: https://www.sslshopper.com/article-most-common-openssl-commands.html
